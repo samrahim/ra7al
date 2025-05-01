@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "231825545587",
+    "project_id": "ra7al-f4953",
+    "storage_bucket": "ra7al-f4953.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231825545587:android:d305c7f82e7ecbbecf0d06",
+        "android_client_info": {
+          "package_name": "com.example.ra7al"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN8CXHdoJwPFxrfjmp6G01Ad0qySsxqwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
