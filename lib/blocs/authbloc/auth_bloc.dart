@@ -33,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await authRepository.login(event.email, event.password);
     } catch (e) {
+      print('e---------->$e');
       emit(AuthError(e.toString()));
       emit(Unauthenticated());
     }

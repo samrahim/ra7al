@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  @override
   Stream<User?> get user => _auth.authStateChanges();
 
   Future<void> login(String email, String password) async {
