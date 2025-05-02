@@ -21,6 +21,15 @@ class HomeScreen extends StatelessWidget {
               context.read<AuthBloc>().add(LogoutRequested());
             },
           ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is Authenticated && state.user.photoURL != null) {
+                return CircleAvatar(child: Image.network(state.user.photoURL!));
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
         ],
       ),
       body: BlocListener<AuthBloc, AuthState>(
@@ -34,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             if (state is AdhanError) {
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              ).showSnackBar(SnackBar(content: Text("please check your GPS")));
             }
           },
           builder: (context, state) {

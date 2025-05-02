@@ -54,7 +54,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                    CreateUserWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                },
                 child: const Text('Create Account'),
               ),
               ElevatedButton.icon(

@@ -41,4 +41,18 @@ class AuthRepository {
       throw Exception('Google sign in failed: $e');
     }
   }
+
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw Exception('Login failed $e');
+    }
+  }
 }
