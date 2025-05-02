@@ -12,7 +12,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('رحال'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -85,15 +86,19 @@ class PrayerTimesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: [
-        PrayerTimeTile(title: 'Fajr', time: timings.fajr),
-        PrayerTimeTile(title: 'Dhuhr', time: timings.dhuhr),
-        PrayerTimeTile(title: 'Asr', time: timings.asr),
-        PrayerTimeTile(title: 'Maghrib', time: timings.maghrib),
-        PrayerTimeTile(title: 'Isha', time: timings.isha),
-      ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          PrayerTimeTile(title: 'Fajr', time: timings.fajr),
+          PrayerTimeTile(title: 'Dhuhr', time: timings.dhuhr),
+          PrayerTimeTile(title: 'Asr', time: timings.asr),
+          PrayerTimeTile(title: 'Maghrib', time: timings.maghrib),
+          PrayerTimeTile(title: 'Isha', time: timings.isha),
+        ],
+      ),
     );
   }
 }

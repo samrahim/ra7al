@@ -66,7 +66,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: goRouter,
-      debugShowCheckedModeBanner: false,
 
       builder: (context, child) {
         WidgetsBinding.instance.addPostFrameCallback((_) {

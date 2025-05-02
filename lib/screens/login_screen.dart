@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/authbloc/auth_bloc.dart';
+import 'package:ra7al/screens/screens.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -40,6 +41,17 @@ class LoginScreen extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'Password'),
                 ),
                 const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => RegisterScreen()),
+                    );
+                  },
+                  child: Text("cree compte"),
+                ),
+                const SizedBox(height: 20),
+
                 state is AuthLoading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(

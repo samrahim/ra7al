@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/authbloc/auth_bloc.dart';
 import 'package:ra7al/screens/screens.dart';
 
-// app_router.dart
 final goRouter = GoRouter(
   redirect: (BuildContext context, GoRouterState state) {
     final authBloc = context.read<AuthBloc>();
@@ -26,5 +25,9 @@ final goRouter = GoRouter(
     GoRoute(path: '/splash', builder: (context, state) => const SplashScreen()),
     GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
     GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
   ],
 );

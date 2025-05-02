@@ -26,3 +26,8 @@ class LogoutRequested extends AuthEvent {
   @override
   List<Object> get props => [];
 }
+
+class GoogleSignInRequested extends AuthEvent {
+  @override
+  List<Object> get props => [];
+}
