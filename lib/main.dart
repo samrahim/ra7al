@@ -8,6 +8,7 @@ import 'package:ra7al/repositories/adhan_repository.dart';
 import 'package:ra7al/router/app_router.dart';
 import 'package:ra7al/firebase_options.dart';
 import 'package:ra7al/repositories/authrepository.dart';
+import 'package:ra7al/screens/screens.dart';
 import 'package:ra7al/services/dio_client.dart';
 import 'package:ra7al/services/location_service.dart';
 
@@ -66,7 +67,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: goRouter,
-
       builder: (context, child) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _handleInitialLocation(context);

@@ -18,7 +18,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<GoogleSignInRequested>(_onGoogleSignInRequested);
     on<CreateUserWithEmailAndPassword>(_createUserWithEmailAndPassword);
     _userSubscription = authRepository.user.listen((user) {
-      print('-------------${user}---------------');
       add(AuthStateChanged(user));
     });
   }
