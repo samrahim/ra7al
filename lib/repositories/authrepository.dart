@@ -64,11 +64,14 @@ class AuthRepository {
         final OAuthCredential credential = FacebookAuthProvider.credential(
           result.accessToken!.tokenString,
         );
+
         await _auth.signInWithCredential(credential);
       }
     } on FirebaseAuthException catch (e) {
+      print("facebook auth err------$e");
       throw FirebaseAuthException(code: e.code, message: e.message);
     } catch (e) {
+      print("facebook auth err------$e");
       throw Exception('Facebook login failed: $e');
     }
   }

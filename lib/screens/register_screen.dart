@@ -30,225 +30,236 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/eee0388dcbe4f3d75252f755ec4ad8687e732e21.png',
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  margin: EdgeInsets.all(24),
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Image.asset(
+              'assets/eee0388dcbe4f3d75252f755ec4ad8687e732e21.png',
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(24),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      child: Icon(CupertinoIcons.back, color: Colors.black),
+                    ),
                   ),
-                  child: Icon(CupertinoIcons.back, color: Colors.black),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Text(
-                        'إنشاء حساب',
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 11, 75, 65),
-                        ),
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
                       ),
-                      SizedBox(height: 32),
-                      CustomTextFormField(
-                        controller: _usernameController,
-                        suffixIcon: Icons.person,
-                        hintText: 'إسم المستخدم',
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.ltr,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'يرجى إدخال إسم المستخدم';
-                          }
-                          return null;
-                        },
+                      height: MediaQuery.of(context).size.height * .8,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
                       ),
-                      const SizedBox(height: 16),
-                      CustomTextFormField(
-                        controller: _emailController,
-                        suffixIcon: Icons.email,
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.ltr,
-                        hintText: 'البريد الإلكتروني',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'يرجى إدخال البريد الإلكتروني';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextFormField(
-                        controller: _passwordController,
-                        suffixIcon: Icons.key,
-                        hintText: 'كلمة المرور',
-                        isPasswordField: true,
-                        obscureText: obsecure,
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.ltr,
-                        onToggleObscure:
-                            () => setState(() => obsecure = !obsecure),
-                        validator: (value) {
-                          if (value == null || value.isEmpty)
-                            return 'يرجى إدخال كلمة المرور';
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextFormField(
-                        controller: _passwordController2,
-                        suffixIcon: Icons.key,
-                        hintText: 'تأكيد كلمة المرور',
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.ltr,
-                        isPasswordField: true,
-                        obscureText: obsecure1,
-                        onToggleObscure:
-                            () => setState(() => obsecure1 = !obsecure1),
-
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'يرجى تأكيد كلمة المرور';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => LoginScreen()),
-                            );
-                          },
-                          child: Text(
-                            "لديك حساب ؟",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 11, 75, 65),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      InkWell(
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            if (_passwordController == _passwordController2 &&
-                                _emailController.text != '' &&
-                                _usernameController.text != '') {
-                              context.read<AuthBloc>().add(
-                                CreateUserWithEmailAndPassword(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ),
-                              );
-                            }
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Color.fromARGB(255, 11, 75, 65),
-                          ),
-                          child: Center(
-                            child: const Text(
-                              ' تسجيل',
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'إنشاء حساب',
+                              textDirection: TextDirection.rtl,
                               style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
+                                fontSize: 32,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromARGB(255, 11, 75, 65),
                               ),
                             ),
-                          ),
+
+                            CustomTextFormField(
+                              controller: _usernameController,
+                              suffixIcon: Icons.person,
+                              hintText: 'إسم المستخدم',
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.ltr,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'يرجى إدخال إسم المستخدم';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            CustomTextFormField(
+                              controller: _emailController,
+                              suffixIcon: Icons.email,
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.ltr,
+                              hintText: 'البريد الإلكتروني',
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'يرجى إدخال البريد الإلكتروني';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            CustomTextFormField(
+                              controller: _passwordController,
+                              suffixIcon: Icons.key,
+                              hintText: 'كلمة المرور',
+                              isPasswordField: true,
+                              obscureText: obsecure,
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.ltr,
+                              onToggleObscure:
+                                  () => setState(() => obsecure = !obsecure),
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return 'يرجى إدخال كلمة المرور';
+                                return null;
+                              },
+                            ),
+
+                            CustomTextFormField(
+                              controller: _passwordController2,
+                              suffixIcon: Icons.key,
+                              hintText: 'تأكيد كلمة المرور',
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.ltr,
+                              isPasswordField: true,
+                              obscureText: obsecure1,
+                              onToggleObscure:
+                                  () => setState(() => obsecure1 = !obsecure1),
+
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'يرجى تأكيد كلمة المرور';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => LoginScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "لديك حساب ؟",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 11, 75, 65),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            InkWell(
+                              onTap: () {
+                                if (_formKey.currentState!.validate()) {
+                                  if (_passwordController ==
+                                          _passwordController2 &&
+                                      _emailController.text != '' &&
+                                      _usernameController.text != '') {
+                                    context.read<AuthBloc>().add(
+                                      CreateUserWithEmailAndPassword(
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                ),
+                                child: Center(
+                                  child: const Text(
+                                    ' تسجيل',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Divider(
+                                    color: Color.fromARGB(255, 11, 75, 65),
+                                    thickness: 1,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("أو"),
+                                ),
+                                Expanded(
+                                  child: Divider(
+                                    color: Color.fromARGB(255, 11, 75, 65),
+                                    thickness: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    context.read<AuthBloc>().add(
+                                      GoogleSignInRequested(),
+                                    );
+                                  },
+                                  child: Image.asset('assets/image 2.png'),
+                                ),
+                                SizedBox(width: 16),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<AuthBloc>().add(
+                                      FacebookSignInRequested(),
+                                    );
+                                  },
+                                  child: Image.asset('assets/Group 332.png'),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Color.fromARGB(255, 11, 75, 65),
-                              thickness: 1,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("أو"),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Color.fromARGB(255, 11, 75, 65),
-                              thickness: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              context.read<AuthBloc>().add(
-                                GoogleSignInRequested(),
-                              );
-                            },
-                            child: Image.asset('assets/image 2.png'),
-                          ),
-                          SizedBox(width: 16),
-                          InkWell(
-                            onTap: () {
-                              context.read<AuthBloc>().add(
-                                FacebookSignInRequested(),
-                              );
-                            },
-                            child: Image.asset('assets/Group 332.png'),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
