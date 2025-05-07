@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutRequested>(_onLogoutRequested);
     on<GoogleSignInRequested>(_onGoogleSignInRequested);
     on<CreateUserWithEmailAndPassword>(_createUserWithEmailAndPassword);
+    on<FacebookSignInRequested>(_onFacebookSignInRequested);
     _userSubscription = authRepository.user.listen((user) {
       add(AuthStateChanged(user));
     });
@@ -24,6 +25,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthStateChanged(AuthStateChanged event, Emitter<AuthState> emit) {
     emit(event.user != null ? Authenticated(event.user!) : Unauthenticated());
+  }
+
+  Future<void> _onFacebookSignInRequested(
+    FacebookSignInRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.signInWithFacebook();
+    } catch (e) {
+      emit(AuthError(e.toString()));
+      emit(Unauthenticated());
+    }
   }
 
   Future<void> _onGoogleSignInRequested(

@@ -43,3 +43,8 @@ class CreateUserWithEmailAndPassword extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class FacebookSignInRequested extends AuthEvent {
+  @override
+  List<Object> get props => [];
+}

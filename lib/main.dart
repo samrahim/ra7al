@@ -8,7 +8,6 @@ import 'package:ra7al/repositories/adhan_repository.dart';
 import 'package:ra7al/router/app_router.dart';
 import 'package:ra7al/firebase_options.dart';
 import 'package:ra7al/repositories/authrepository.dart';
-import 'package:ra7al/screens/screens.dart';
 import 'package:ra7al/services/dio_client.dart';
 import 'package:ra7al/services/location_service.dart';
 
@@ -19,15 +18,15 @@ void main() async {
   runApp(
     MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => AuthRepository()),
+        RepositoryProvider(create: (_) => AuthRepository()),
         RepositoryProvider<AdhanRepository>(
           create:
-              (context) => AdhanRepository(
+              (_) => AdhanRepository(
                 dioClient: DioClient(
                   dio: Dio(
                     BaseOptions(
                       baseUrl: adhanBaseUrl,
-                      connectTimeout: const Duration(seconds: 60),
+                      connectTimeout: const Duration(seconds: 180),
                     ),
                   ),
                 ),
@@ -51,7 +50,7 @@ void main() async {
                   adhanRepository: RepositoryProvider.of<AdhanRepository>(
                     context,
                   ),
-                ),
+                )..add(FetchAdhanTiming()),
           ),
         ],
         child: MyApp(),
@@ -67,6 +66,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: goRouter,
+      debugShowCheckedModeBanner: false,
       builder: (context, child) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _handleInitialLocation(context);
