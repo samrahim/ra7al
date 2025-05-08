@@ -4,7 +4,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? labelText;
   final String? hintText;
-  final IconData suffixIcon;
+  final IconData? suffixIcon;
   final bool isPasswordField;
   final bool? obscureText;
 

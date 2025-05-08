@@ -44,7 +44,7 @@ class CustomAppbar extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: 4),
               Container(
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -58,6 +58,8 @@ class CustomAppbar extends StatelessWidget {
               ),
             ],
           ),
+
+          Image.asset('assets/ri7alPNG_logo-white-rgb 1.png'),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is Authenticated &&

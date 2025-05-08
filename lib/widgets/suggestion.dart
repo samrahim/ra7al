@@ -17,17 +17,10 @@ class Suggestion extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
+
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'اظهار الكل',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 23, 182, 57),
-                  ),
-                ),
                 Text(
                   "عروض موصى بها",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -43,7 +36,7 @@ class Suggestion extends StatelessWidget {
                 child: Image.asset(
                   width: MediaQuery.of(context).size.width * 0.44,
                   fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height / 6,
+                  height: MediaQuery.of(context).size.height / 7,
                   'assets/image.png',
                 ),
               ),
@@ -54,11 +47,12 @@ class Suggestion extends StatelessWidget {
                   "assets/Recommended.png",
 
                   fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height / 6,
+                  height: MediaQuery.of(context).size.height / 7,
                 ),
               ),
             ],
           ),
+          SizedBox(height: 4),
         ],
       ),
     );

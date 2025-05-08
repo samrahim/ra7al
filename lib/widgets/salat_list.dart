@@ -79,7 +79,7 @@ class PrayerTimeTile extends StatelessWidget {
             formatPrayerTime(time),
             style: TextStyle(
               color: isNext ? Colors.green : Colors.black,
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -87,7 +87,7 @@ class PrayerTimeTile extends StatelessWidget {
             title,
             style: TextStyle(
               color: isNext ? Colors.green : Colors.black,
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
