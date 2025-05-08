@@ -19,8 +19,6 @@ class AuthRepository {
   Future<void> logout() async {
     try {
       await _auth.signOut();
-      await _googleSignIn.signOut();
-      await _googleSignIn.disconnect();
     } catch (e) {
       throw Exception('Logout failed: $e');
     }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/authbloc/auth_bloc.dart';
 import 'package:ra7al/screens/screens.dart';
+import 'package:ra7al/widgets/widgets.dart' show CustomTextFormField;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -124,8 +125,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onToggleObscure:
                                   () => setState(() => obsecure = !obsecure),
                               validator: (value) {
-                                if (value == null || value.isEmpty)
+                                if (value == null || value.isEmpty) {
                                   return 'يرجى إدخال كلمة المرور';
+                                }
                                 return null;
                               },
                             ),
@@ -261,68 +263,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
-  final String? labelText;
-  final String? hintText;
-  final IconData suffixIcon;
-  final bool isPasswordField;
-  final bool? obscureText;
-
-  final VoidCallback? onToggleObscure;
-  final String? Function(String?)? validator;
-  final TextDirection? textDirection;
-  final TextAlign? textAlign;
-
-  const CustomTextFormField({
-    super.key,
-    required this.controller,
-    this.labelText,
-    this.hintText,
-    required this.suffixIcon,
-    this.isPasswordField = false,
-    this.obscureText,
-    this.onToggleObscure,
-    this.validator,
-    this.textDirection,
-
-    this.textAlign,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText ?? false,
-      textDirection: textDirection,
-
-      textAlign: textAlign ?? TextAlign.start,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 11, 75, 65),
-            width: 0.8,
-          ),
-        ),
-        suffixIcon: Icon(suffixIcon),
-        prefixIcon:
-            isPasswordField
-                ? IconButton(
-                  onPressed: onToggleObscure,
-                  icon: Icon(
-                    obscureText! ? Icons.visibility_off : Icons.visibility,
-                  ),
-                )
-                : null,
-        labelText: labelText,
-        hintText: hintText,
-      ),
-      validator: validator,
     );
   }
 }
