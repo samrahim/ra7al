@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/blocs.dart';
 import 'package:ra7al/screens/agences.dart';
+import 'package:ra7al/screens/residence.dart';
 import 'package:ra7al/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -151,7 +152,11 @@ class HomeScreen extends StatelessWidget {
                                     } else if (partenaire.name == 'مطاعم') {
                                       print('مطاعم');
                                     } else if (partenaire.name == 'إقامة') {
-                                      print('إقامة');
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => Residence(),
+                                        ),
+                                      );
                                     } else {}
                                   },
                                   child: Container(
