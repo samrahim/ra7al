@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     bool obsecure = true;
@@ -42,184 +43,205 @@ class _LoginScreenState extends State<LoginScreen> {
                   fit: BoxFit.cover,
                 ),
                 Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: MediaQuery.of(context).size.height - 40,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'سجل دخولك',
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: MediaQuery.of(context).size.height - 40,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'سجل دخولك',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                  ),
-                                  child: TextField(
-                                    controller: emailController,
-                                    textAlign: TextAlign.right,
-                                    textDirection: TextDirection.ltr,
-                                    decoration: const InputDecoration(
-                                      hintText: 'البريد الإلكتروني',
-
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 16),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                  ),
-                                  child: TextField(
-                                    controller: passwordController,
-                                    textAlign: TextAlign.right,
-                                    obscureText: obsecure,
-
-                                    textDirection: TextDirection.ltr,
-                                    decoration: InputDecoration(
-                                      prefixIcon: IconButton(
-                                        onPressed:
-                                            () => setState(
-                                              () => obsecure = !obsecure,
-                                            ),
-                                        icon:
-                                            obsecure
-                                                ? Icon(Icons.visibility)
-                                                : Icon(Icons.visibility_off),
-                                      ),
-                                      hintText: 'كلمة المرور',
-
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text('هل نسيت كلمة السر؟'),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                InkWell(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 8),
+                              Column(
+                                children: [
+                                  Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: Colors.white,
                                     ),
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Center(
-                                      child: const Text(
-                                        ' دخول',
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromARGB(
-                                            255,
-                                            11,
-                                            75,
-                                            65,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'يرجى إدخال البريد الإلكتروني';
+                                        }
+                                        return null;
+                                      },
+                                      controller: emailController,
+                                      textAlign: TextAlign.right,
+                                      textDirection: TextDirection.ltr,
+                                      decoration: const InputDecoration(
+                                        hintText: 'البريد الإلكتروني',
+
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-
-                                  onTap: () {
-                                    context.read<AuthBloc>().add(
-                                      LoginRequested(
-                                        emailController.text.trim(),
-                                        passwordController.text.trim(),
-                                      ),
-                                    );
-                                  },
-                                ),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => RegisterScreen(),
-                                          ),
-                                        );
+                                  SizedBox(height: 16),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white,
+                                    ),
+                                    child: TextFormField(
+                                      controller: passwordController,
+                                      textAlign: TextAlign.right,
+                                      obscureText: obsecure,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'يرجى إدخال كلمة المرور';
+                                        }
+                                        return null;
                                       },
-                                      child: Text(
-                                        'تسجيل',
-                                        style: TextStyle(
-                                          color: Color.fromARGB(
-                                            255,
-                                            255,
-                                            112,
-                                            41,
+
+                                      textDirection: TextDirection.ltr,
+                                      decoration: InputDecoration(
+                                        prefixIcon: IconButton(
+                                          onPressed:
+                                              () => setState(
+                                                () => obsecure = !obsecure,
+                                              ),
+                                          icon:
+                                              obsecure
+                                                  ? Icon(Icons.visibility)
+                                                  : Icon(Icons.visibility_off),
+                                        ),
+                                        hintText: 'كلمة المرور',
+
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Text(
-                                      'لا تملك حسابا؟',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-
-                            Column(
-                              children: [
-                                Text('او سجل بواسطة'),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        context.read<AuthBloc>().add(
-                                          GoogleSignInRequested(),
-                                        );
-                                      },
-                                      child: Image.asset('assets/image 2.png'),
-                                    ),
-                                    SizedBox(width: 16),
-                                    InkWell(
-                                      onTap: () {
-                                        context.read<AuthBloc>().add(
-                                          FacebookSignInRequested(),
-                                        );
-                                      },
-                                      child: Image.asset(
-                                        'assets/Group 332.png',
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text('هل نسيت كلمة السر؟'),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  InkWell(
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.white,
+                                      ),
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Center(
+                                        child: const Text(
+                                          ' دخول',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                              255,
+                                              11,
+                                              75,
+                                              65,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+
+                                    onTap: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        context.read<AuthBloc>().add(
+                                          LoginRequested(
+                                            emailController.text.trim(),
+                                            passwordController.text.trim(),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => RegisterScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'تسجيل',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              112,
+                                              41,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'لا تملك حسابا؟',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              Column(
+                                children: [
+                                  Text('او سجل بواسطة'),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          context.read<AuthBloc>().add(
+                                            GoogleSignInRequested(),
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          'assets/image 2.png',
+                                        ),
+                                      ),
+                                      SizedBox(width: 16),
+                                      InkWell(
+                                        onTap: () {
+                                          context.read<AuthBloc>().add(
+                                            FacebookSignInRequested(),
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          'assets/Group 332.png',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

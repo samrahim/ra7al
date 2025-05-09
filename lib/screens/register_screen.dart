@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/authbloc/auth_bloc.dart';
 import 'package:ra7al/screens/screens.dart';
 import 'package:ra7al/widgets/widgets.dart' show CustomTextFormField;
@@ -25,7 +24,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
+    _passwordController2.dispose();
+
     super.dispose();
   }
 

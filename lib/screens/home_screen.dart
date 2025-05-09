@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ra7al/blocs/blocs.dart';
 import 'package:ra7al/screens/agences.dart';
+import 'package:ra7al/screens/omra.dart';
 import 'package:ra7al/screens/residence.dart';
+import 'package:ra7al/screens/restaurents.dart' show Restaurents;
+import 'package:ra7al/screens/transport.dart';
+import 'package:ra7al/screens/voyage.dart';
 import 'package:ra7al/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -90,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                                       FetchAdhanTiming(),
                                     );
                                   },
-                                  child: const Text('Retry'),
+                                  child: const Text('اعد التحميل'),
                                 ),
                               ],
                             ),
@@ -150,14 +154,36 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       );
                                     } else if (partenaire.name == 'مطاعم') {
-                                      print('مطاعم');
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => Restaurents(),
+                                        ),
+                                      );
                                     } else if (partenaire.name == 'إقامة') {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (_) => Residence(),
                                         ),
                                       );
-                                    } else {}
+                                    } else if (partenaire.name == 'عمرة') {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => Omra(),
+                                        ),
+                                      );
+                                    } else if (partenaire.name == 'صمم رحلتك') {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => Voyage(),
+                                        ),
+                                      );
+                                    } else if (partenaire.name == 'نقل') {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => Transport(),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
