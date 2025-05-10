@@ -21,33 +21,33 @@ class PrayerTimesList extends StatelessWidget {
         children: [
           Text(
             "السلام عليكم",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PrayerTimeTile(
-                title: 'Fajr',
+                title: 'الفجر',
                 time: timings.fajr,
                 isNext: nextPrayer == 'Fajr',
               ),
               PrayerTimeTile(
-                title: 'Dhuhr',
+                title: 'الظهر',
                 time: timings.dhuhr,
                 isNext: nextPrayer == 'Dhuhr',
               ),
               PrayerTimeTile(
-                title: 'Aser',
+                title: 'العصر',
                 time: timings.asr,
                 isNext: nextPrayer == 'Aser',
               ),
               PrayerTimeTile(
-                title: 'Maghrib',
+                title: 'المغرب',
                 time: timings.maghrib,
                 isNext: nextPrayer == 'Maghrib',
               ),
               PrayerTimeTile(
-                title: 'Isha',
+                title: 'العشاء',
                 time: timings.isha,
                 isNext: nextPrayer == 'Isha',
               ),
@@ -79,16 +79,16 @@ class PrayerTimeTile extends StatelessWidget {
             formatPrayerTime(time),
             style: TextStyle(
               color: isNext ? Colors.green : Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
             ),
           ),
           Text(
             title,
             style: TextStyle(
               color: isNext ? Colors.green : Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
             ),
           ),
         ],

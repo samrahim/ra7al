@@ -22,7 +22,7 @@ class Suggestion extends StatelessWidget {
               children: [
                 Text(
                   "عروض موصى بها",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -33,20 +33,20 @@ class Suggestion extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  width: MediaQuery.of(context).size.width * 0.44,
+                  width: MediaQuery.of(context).size.width * 0.47,
                   fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height / 7,
+                  height: MediaQuery.of(context).size.height * .13,
                   'assets/image.png',
                 ),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  width: MediaQuery.of(context).size.width * 0.44,
+                  width: MediaQuery.of(context).size.width * 0.47,
                   "assets/Recommended.png",
 
                   fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height / 7,
+                  height: MediaQuery.of(context).size.height * .13,
                 ),
               ),
             ],
