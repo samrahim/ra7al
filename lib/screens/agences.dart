@@ -82,13 +82,15 @@ class _AgencesState extends State<Agences> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: DropdownButton<String>(
-                      hint: Text(
-                        "اختر الولاية",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 11, 75, 65),
-                          fontSize: 16,
+                      hint: Center(
+                        child: Text(
+                          "اختر الولاية",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 11, 75, 65),
+                            fontSize: 16,
+                          ),
+                          textDirection: TextDirection.rtl,
                         ),
-                        textDirection: TextDirection.rtl,
                       ),
                       value: selectedWilaya,
                       underline: SizedBox(),

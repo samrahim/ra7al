@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -301,6 +302,49 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Color.fromARGB(255, 23, 182, 57),
+        unselectedItemColor: Color.fromARGB(255, 11, 75, 65),
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.home,
+              color: Color.fromARGB(255, 23, 182, 57),
+              weight: 28,
+            ),
+            label: "الرئيسية",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.shopping_cart,
+              color: Color.fromARGB(255, 11, 75, 65),
+            ),
+            label: "عروض",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.location,
+              color: Color.fromARGB(255, 11, 75, 65),
+            ),
+            label: "استكشف",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.mosque_rounded,
+              color: Color.fromARGB(255, 11, 75, 65),
+            ),
+            label: "عبادات",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.gps_fixed, color: Color.fromARGB(255, 11, 75, 65)),
+            label: "الخريطة",
           ),
         ],
       ),
