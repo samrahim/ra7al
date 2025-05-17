@@ -11,6 +11,7 @@ class Agences extends StatefulWidget {
 
 class _AgencesState extends State<Agences> {
   String? selectedWilaya;
+  String? selectedCountry;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -75,61 +76,170 @@ class _AgencesState extends State<Agences> {
                   ),
                 ),
 
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: DropdownButton<String>(
-                        hint: Center(
-                          child: Text(
-                            "اختر الولاية",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: Center(
+                              child: Text(
+                                "نوع الرحلة",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                  fontSize: 16,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+
+                            underline: SizedBox(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.green,
+                            ),
+                            dropdownColor: Colors.white,
                             style: TextStyle(
                               color: Color.fromARGB(255, 11, 75, 65),
                               fontSize: 16,
                             ),
-                            textDirection: TextDirection.rtl,
+                            borderRadius: BorderRadius.circular(8),
+                            items: [],
+                            onChanged: (String? newValue) {},
                           ),
                         ),
-                        value: selectedWilaya,
-                        underline: SizedBox(),
-                        icon: Icon(Icons.arrow_drop_down, color: Colors.green),
-                        dropdownColor: Colors.white,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 11, 75, 65),
-                          fontSize: 16,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                        items:
-                            wilayas.map<DropdownMenuItem<String>>((
-                              String value,
-                            ) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  textDirection: TextDirection.rtl,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedWilaya = newValue;
-                          });
-                        },
                       ),
                     ),
-                  ),
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: Center(
+                              child: Text(
+                                "اختر الولاية",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                  fontSize: 16,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                            value: selectedWilaya,
+                            underline: SizedBox(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.green,
+                            ),
+                            dropdownColor: Colors.white,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 11, 75, 65),
+                              fontSize: 16,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            items:
+                                wilayas.map<DropdownMenuItem<String>>((
+                                  String value,
+                                ) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      textDirection: TextDirection.rtl,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedWilaya = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: Center(
+                              child: Text(
+                                "البلد",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                  fontSize: 16,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+
+                            underline: SizedBox(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.green,
+                            ),
+                            dropdownColor: Colors.white,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 11, 75, 65),
+                              fontSize: 16,
+                            ),
+                            value: selectedCountry,
+                            borderRadius: BorderRadius.circular(8),
+                            items:
+                                countries.map<DropdownMenuItem<String>>((
+                                  String value,
+                                ) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      textDirection: TextDirection.rtl,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCountry = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
                 Expanded(
@@ -285,3 +395,5 @@ class AgenceModel {
 }
 
 List<String> wilayas = ['الجزائر', 'وهران', 'عنابة', 'جيجل', 'باتنة'];
+
+List<String> countries = ['الجزائر', 'تونس', 'الإمارات', 'السعودية', 'فرنسا'];

@@ -9,7 +9,7 @@ class CustomAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8, top: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -60,7 +60,7 @@ class CustomAppbar extends StatelessWidget {
           ),
 
           Image.asset(
-            'assets/logowhite2.png',
+            'assets/ddddd.png',
 
             width: MediaQuery.of(context).size.width * .3,
           ),
