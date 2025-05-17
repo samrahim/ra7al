@@ -11,6 +11,7 @@ class PrayerTimesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final nextPrayer = getNextPrayer(timings);
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),

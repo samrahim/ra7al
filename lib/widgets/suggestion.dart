@@ -12,19 +12,13 @@ class Suggestion extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "عروض موصى بها",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-              ],
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Text(
+              "عروض موصى بها",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
           ),
           Row(

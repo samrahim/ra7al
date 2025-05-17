@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.20.2
   google_sign_in: ^6.3.0
   flutter_facebook_auth: ^7.1.2
+  floating_navbar: ^3.0.0
   
 
 dev_dependencies:

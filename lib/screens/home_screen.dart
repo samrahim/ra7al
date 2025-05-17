@@ -11,344 +11,464 @@ import 'package:ra7al/screens/transport.dart';
 import 'package:ra7al/screens/voyage.dart';
 import 'package:ra7al/widgets/widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController _controller = ScrollController();
+  bool _showLeft = false;
+  bool _showRight = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_scrollListener);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _updateIcons();
+    });
+  }
+
+  void _scrollListener() {
+    _updateIcons();
+  }
+
+  void _updateIcons() {
+    final maxScroll = _controller.position.maxScrollExtent;
+    final current = _controller.offset;
+    setState(() {
+      _showLeft = current > 0;
+      _showRight = current < maxScroll;
+    });
+  }
+
+  void _scrollLeft() {
+    final offset = (_controller.offset - 200).clamp(
+      0.0,
+      _controller.position.maxScrollExtent,
+    );
+    _controller.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
+  void _scrollRight() {
+    final offset = (_controller.offset + 200).clamp(
+      0.0,
+      _controller.position.maxScrollExtent,
+    );
+    _controller.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_scrollListener);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/eee0388dcbe4f3d75252f755ec4ad8687e732e21.png',
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                CustomAppbar(),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Image.asset(
+              'assets/eee0388dcbe4f3d75252f755ec4ad8687e732e21.png',
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomAppbar(),
+                  SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
 
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+                      child: SearchBar(
+                        leading: Icon(Icons.search),
+                        hintText: 'ابحث عن وجهتك القادمة',
 
-                    borderRadius: BorderRadius.circular(8),
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: CustomTextFormField(
-                    suffixIcon: Icons.search,
-                    controller: TextEditingController(),
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.ltr,
-                    hintText: 'ابحث عن وجهتك القادمة',
-                  ),
-                ),
-                BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    if (state is Unauthenticated) {
-                      context.go('/login');
-                    }
-                  },
-                  child: BlocConsumer<AdhanBloc, AdhanState>(
+
+                  BlocListener<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state is AdhanError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("please check your GPS")),
-                        );
+                      if (state is Unauthenticated) {
+                        context.go('/login');
                       }
                     },
-                    builder: (context, state) {
-                      if (state is AdhanLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+                    child: BlocConsumer<AdhanBloc, AdhanState>(
+                      listener: (context, state) {
+                        if (state is AdhanError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("please check your GPS")),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is AdhanLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                      if (state is AdhanLoaded) {
-                        return Column(
-                          children: [
-                            SizedBox(child: Text(state.cityAndAdhan.city)),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-
-                              child: PrayerTimesList(
-                                timings: state.cityAndAdhan.model,
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-
-                      if (state is AdhanError) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        if (state is AdhanLoaded) {
+                          return Column(
                             children: [
-                              Text('Error: ${state.message}'),
-                              const SizedBox(height: 16),
-                              ElevatedButton(
-                                onPressed: () {
-                                  context.read<AdhanBloc>().add(
-                                    FetchAdhanTiming(),
-                                  );
-                                },
-                                child: const Text('اعد التحميل'),
+                              SizedBox(child: Text(state.cityAndAdhan.city)),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+
+                                child: PrayerTimesList(
+                                  timings: state.cityAndAdhan.model,
+                                ),
                               ),
                             ],
-                          ),
+                          );
+                        }
+
+                        if (state is AdhanError) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Error: ${state.message}'),
+                                const SizedBox(height: 16),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    context.read<AdhanBloc>().add(
+                                      FetchAdhanTiming(),
+                                    );
+                                  },
+                                  child: const Text('اعد التحميل'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        return const Center(
+                          child: Text('Pull to refresh prayer times'),
                         );
-                      }
-
-                      return const Center(
-                        child: Text('Pull to refresh prayer times'),
-                      );
-                    },
+                      },
+                    ),
                   ),
-                ),
-                Suggestion(),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  Suggestion(),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
 
-                  height: MediaQuery.of(context).size.height * 0.18,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 0,
-                          ),
-                          child: Text(
-                            "عروض",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "عروض",
+
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                      ),
 
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: ListView.builder(
-                            reverse: true,
-                            itemCount: patrenairesmodels.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, ind) {
-                              final partenaire = patrenairesmodels[ind];
-                              return InkWell(
-                                onTap: () {
-                                  if (partenaire.name == 'وكالات سياحية') {
-                                    print('وكالات سياحية');
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => Agences(),
-                                      ),
-                                    );
-                                  } else if (partenaire.name == 'مطاعم') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => Restaurents(),
-                                      ),
-                                    );
-                                  } else if (partenaire.name == 'إقامة') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => Residence(),
-                                      ),
-                                    );
-                                  } else if (partenaire.name == 'عمرة') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (_) => Omra()),
-                                    );
-                                  } else if (partenaire.name == 'صمم رحلتك') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => Voyage(),
-                                      ),
-                                    );
-                                  } else if (partenaire.name == 'نقل') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => Transport(),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * .3,
-
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 16,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Colors.green,
-                                      width: 1.6,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/${partenaire.imagePath}',
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                            0.07,
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 40,
+                                ),
+                                child: ListView.builder(
+                                  controller: _controller,
+                                  reverse: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: patrenairesmodels.length,
+                                  itemBuilder: (context, ind) {
+                                    final partenaire = patrenairesmodels[ind];
+                                    return InkWell(
+                                      onTap: () => _onItemTap(partenaire),
+                                      child: Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                            0.4,
+                                            0.25,
+
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                          vertical: 4,
+                                        ),
+
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.6,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              'assets/${partenaire.imagePath}',
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.05,
+                                              width:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.width *
+                                                  0.28,
+                                            ),
+                                            Text(partenaire.name),
+                                          ],
+                                        ),
                                       ),
-                                      Text(partenaire.name),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-
-                  height: MediaQuery.of(context).size.height * 0.17,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "اكتشف",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.builder(
-                            reverse: true,
-                            itemCount: explore.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, ind) {
-                              final partenaire = explore[ind];
-                              return InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * .3,
-                                  padding: EdgeInsets.symmetric(horizontal: 0),
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Colors.green,
-                                      width: 1.6,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/${partenaire.imagePath}',
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                            0.07,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                            0.4,
-                                      ),
-                                      Text(partenaire.name),
-                                    ],
+                              if (_showRight)
+                                Positioned(
+                                  left: 0,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.arrow_back_ios),
+                                    onPressed: _scrollRight,
                                   ),
                                 ),
-                              );
-                            },
+                              if (_showLeft)
+                                Positioned(
+                                  right: 0,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.arrow_forward_ios),
+                                    onPressed: _scrollLeft,
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 2),
+                        Center(
+                          child: Text(
+                            "اكتشف",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: ListView.builder(
+                              reverse: true,
+                              itemCount: explore.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, ind) {
+                                final partenaire = explore[ind];
+                                return InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .25,
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                      vertical: 3,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Colors.green,
+                                        width: 1.6,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/${partenaire.imagePath}',
+                                          height:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.height *
+                                              0.05,
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.28,
+                                        ),
+                                        Text(partenaire.name),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Positioned(bottom: 16, child: _navBar()),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Color.fromARGB(255, 23, 182, 57),
-        unselectedItemColor: Color.fromARGB(255, 11, 75, 65),
+    );
+  }
 
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.home,
-              color: Color.fromARGB(255, 23, 182, 57),
-              weight: 28,
-            ),
-            label: "الرئيسية",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.shopping_cart,
-              color: Color.fromARGB(255, 11, 75, 65),
-            ),
-            label: "عروض",
+  Widget _navBar() {
+    return Container(
+      width: MediaQuery.of(context).size.width - 20,
+      height: 65,
+      margin: EdgeInsets.only(right: 10, left: 10, bottom: 10),
+
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CupertinoIcons.home,
+                color: Color.fromARGB(255, 23, 182, 57),
+              ),
+              Text(
+                'الرئيسية',
+                style: TextStyle(color: Color.fromARGB(255, 23, 182, 57)),
+              ),
+            ],
           ),
 
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.location,
-              color: Color.fromARGB(255, 11, 75, 65),
-            ),
-            label: "استكشف",
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CupertinoIcons.shopping_cart,
+                color: Color.fromARGB(255, 11, 75, 65),
+              ),
+              Text('عروض'),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.mosque_rounded,
-              color: Color.fromARGB(255, 11, 75, 65),
-            ),
-            label: "عبادات",
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CupertinoIcons.location,
+                color: Color.fromARGB(255, 11, 75, 65),
+              ),
+              Text('استكشف'),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.gps_fixed, color: Color.fromARGB(255, 11, 75, 65)),
-            label: "الخريطة",
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.mosque_rounded,
+                color: Color.fromARGB(255, 11, 75, 65),
+              ),
+              Text('عبادات'),
+            ],
+          ),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.gps_fixed, color: Color.fromARGB(255, 11, 75, 65)),
+              Text('الخريطة'),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  void _onItemTap(PartenaireModel partenaire) {
+    switch (partenaire.name) {
+      case 'وكالات سياحية':
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => Agences()));
+        break;
+      case 'مطاعم':
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => Restaurents()));
+        break;
+      case 'إقامة':
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => Residence()));
+        break;
+      case 'عمرة':
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => Omra()));
+        break;
+      case 'صمم رحلتك':
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => Voyage()));
+        break;
+      case 'نقل':
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => Transport()));
+        break;
+    }
   }
 }
 
@@ -361,15 +481,15 @@ class PartenaireModel {
 
 List<PartenaireModel> explore = [
   PartenaireModel(name: 'دليلك السياحي', imagePath: 'Framesss.png'),
-  PartenaireModel(name: 'تسوق', imagePath: 'Passport.png'),
   PartenaireModel(name: 'حمامات', imagePath: 'Framess.png'),
+  PartenaireModel(name: 'تسوق', imagePath: 'Passport.png'),
 ];
 
 List<PartenaireModel> patrenairesmodels = [
   PartenaireModel(name: 'وكالات سياحية', imagePath: 'Vector.png'),
+  PartenaireModel(name: 'إقامة', imagePath: 'Frame(1).png'),
+  PartenaireModel(name: 'مطاعم', imagePath: 'Frame(2).png'),
   PartenaireModel(name: 'عمرة', imagePath: 'Frame.png'),
   PartenaireModel(name: 'صمم رحلتك', imagePath: 'Asset 9 1.png'),
-  PartenaireModel(name: 'مطاعم', imagePath: 'Frame(2).png'),
-  PartenaireModel(name: 'إقامة', imagePath: 'Frame(1).png'),
   PartenaireModel(name: 'نقل', imagePath: 'SVGRepo_iconCarrier.png'),
 ];

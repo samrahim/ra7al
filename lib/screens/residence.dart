@@ -58,125 +58,134 @@ class _ResidenceState extends State<Residence> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    borderRadius: BorderRadius.circular(8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
                   ),
-                  child: CustomTextFormField(
-                    suffixIcon: Icons.search,
-                    controller: TextEditingController(),
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.ltr,
-                    hintText: 'ابحث عن مكان اقامتك',
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+
+                    child: SearchBar(
+                      leading: Icon(Icons.search),
+                      hintText: 'ابحث عن مكان اقامتك',
+
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: DropdownButton<String>(
-                          hint: Center(
-                            child: Text(
-                              "اختر الولاية",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 11, 75, 65),
-                                fontSize: 16,
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: Center(
+                              child: Text(
+                                "اختر الولاية",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                  fontSize: 16,
+                                ),
+                                textDirection: TextDirection.rtl,
                               ),
-                              textDirection: TextDirection.rtl,
                             ),
-                          ),
-                          value: selectedWilaya,
-                          underline: SizedBox(),
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.green,
-                          ),
-                          dropdownColor: Colors.white,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 11, 75, 65),
-                            fontSize: 16,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          items:
-                              wilayas.map<DropdownMenuItem<String>>((
-                                String value,
-                              ) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
+                            value: selectedWilaya,
+                            underline: SizedBox(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.green,
+                            ),
+                            dropdownColor: Colors.white,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 11, 75, 65),
+                              fontSize: 16,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            items:
+                                wilayas.map<DropdownMenuItem<String>>((
+                                  String value,
+                                ) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      textDirection: TextDirection.rtl,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedWilaya = newValue;
-                            });
-                          },
+                                  );
+                                }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedWilaya = newValue;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: DropdownButton<String>(
-                          hint: Center(
-                            child: Text(
-                              "فندق",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 11, 75, 65),
-                                fontSize: 16,
-                              ),
-                              textDirection: TextDirection.rtl,
-                            ),
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          value: 'فندق',
-                          underline: SizedBox(),
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.green,
-                          ),
-                          dropdownColor: Colors.white,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 11, 75, 65),
-                            fontSize: 16,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          items: [
-                            DropdownMenuItem<String>(
-                              value: 'فندق',
+                          child: DropdownButton<String>(
+                            hint: Center(
                               child: Text(
-                                'فندق',
-                                textDirection: TextDirection.rtl,
+                                "فندق",
                                 style: TextStyle(
+                                  color: Color.fromARGB(255, 11, 75, 65),
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                            value: 'فندق',
+                            underline: SizedBox(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.green,
+                            ),
+                            dropdownColor: Colors.white,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 11, 75, 65),
+                              fontSize: 16,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            items: [
+                              DropdownMenuItem<String>(
+                                value: 'فندق',
+                                child: Text(
+                                  'فندق',
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                          onChanged: (String? newValue) {},
+                            ],
+                            onChanged: (String? newValue) {},
+                          ),
                         ),
                       ),
                     ),
