@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '231825545587',
     projectId: 'ra7al-f4953',
     storageBucket: 'ra7al-f4953.firebasestorage.app',
-    iosBundleId: 'com.example.ra7al',
+    iosBundleId: 'com.myapp.ra7al',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '231825545587',
     projectId: 'ra7al-f4953',
     storageBucket: 'ra7al-f4953.firebasestorage.app',
-    iosBundleId: 'com.example.ra7al',
+    iosBundleId: 'com.myapp.ra7al',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
