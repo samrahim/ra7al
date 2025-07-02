@@ -12,8 +12,6 @@ class AdhanRepository {
     final city = await locationService.getCityFromPosition(position);
     final time = DateTime.now().toString();
     final datePart = time.split(' ')[0];
-    print("current city is --------$city");
-    print("current date  is --------$datePart");
 
     final response = await dioClient.get('$datePart?address=$city');
     CityAndAdhan cityAndAdhan = CityAndAdhan(

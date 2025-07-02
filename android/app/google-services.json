@@ -7,12 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231825545587:android:d305c7f82e7ecbbecf0d06",
+        "mobilesdk_app_id": "1:231825545587:android:a9c64a56f94b378bcf0d06",
         "android_client_info": {
           "package_name": "com.myapp.ra7al"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "231825545587-vsa5qjoh652kf5h4hhcvqbh1n6nljmor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myapp.ra7al",
+            "certificate_hash": "ab654ccb62efb13ad70436e18233de5cb8cb22d3"
+          }
+        },
+        {
+          "client_id": "231825545587-fv5te7celq7gjmgeuj8g4dm26rnfedr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCN8CXHdoJwPFxrfjmp6G01Ad0qySsxqwY"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231825545587-fv5te7celq7gjmgeuj8g4dm26rnfedr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "231825545587-qqkg0uivt60g7uonjt2j65qhn5sffotq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ra7al"
+              }
+            }
+          ]
         }
       }
     }

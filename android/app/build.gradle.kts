@@ -38,10 +38,10 @@ android {
         applicationId = "com.myapp.ra7al"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 30
+        minSdk = 25
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.2"
+        versionCode = 5
+        versionName = "1.0.5"
     }
     signingConfigs {
         create("release") {
