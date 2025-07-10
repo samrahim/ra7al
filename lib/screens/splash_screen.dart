@@ -10,7 +10,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        await Future.delayed(Duration(seconds: 2));
         if (state is Authenticated && context.mounted) {
           context.go('/home');
         } else if (state is Unauthenticated && context.mounted) {

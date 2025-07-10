@@ -37,6 +37,8 @@ class AuthRepository {
 
       await _auth.signInWithCredential(credential);
     } catch (e) {
+      print('---------------');
+      print(e);
       throw Exception('Google sign in failed: $e');
     }
   }

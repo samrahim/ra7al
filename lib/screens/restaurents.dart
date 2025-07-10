@@ -69,7 +69,20 @@ class _RestaurentsState extends State<Restaurents> {
                     child: SearchBar(
                       leading: Icon(Icons.search),
                       hintText: 'ابحث عن أفضل المطاعم',
-
+                      onSubmitted: (query) {
+                        if (query.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                              content: Text(
+                                'بحث عن: $query (الميزة قيد التطوير)',
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                     ),
                   ),
@@ -159,71 +172,103 @@ class _RestaurentsState extends State<Restaurents> {
                                       restaurent.wilaya == selectedWilaya,
                                 )
                                 .toList();
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.green, width: 1.6),
-                          ),
-                          height: MediaQuery.of(context).size.height * .16,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                CupertinoIcons.back,
-                                color: Color.fromARGB(255, 11, 75, 65),
+                        return InkWell(
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 1),
+                                backgroundColor: Color.fromARGB(
+                                  230,
+                                  23,
+                                  182,
+                                  57,
+                                ),
+                                content: Text(
+                                  'الميزة قيد التطوير',
+                                  textDirection: TextDirection.rtl,
+                                ),
                               ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              bottom: 8,
+                              left: 8,
+                              right: 8,
+                            ),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.green,
+                                width: 1.6,
+                              ),
+                            ),
+                            height: MediaQuery.of(context).size.height * .16,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.back,
+                                  color: Color.fromARGB(255, 11, 75, 65),
+                                ),
 
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        filteredrestaurents[ind].name,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromARGB(
-                                            255,
-                                            11,
-                                            75,
-                                            65,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          filteredrestaurents[ind].name,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color.fromARGB(
+                                              255,
+                                              11,
+                                              75,
+                                              65,
+                                            ),
                                           ),
                                         ),
-                                      ),
 
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Icon(Icons.star, color: Colors.amber),
-                                          Text(
-                                            filteredrestaurents[ind].rating
-                                                .toString(),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            Text(
+                                              filteredrestaurents[ind].rating
+                                                  .toString(),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
 
-                                  SizedBox(width: 16),
-                                  Image.asset(
-                                    filteredrestaurents[ind].imagePath,
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                        .16,
-                                    fit: BoxFit.cover,
-                                    width:
-                                        MediaQuery.of(context).size.width * .3,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    SizedBox(width: 16),
+                                    Image.asset(
+                                      filteredrestaurents[ind].imagePath,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                          .16,
+                                      fit: BoxFit.cover,
+                                      width:
+                                          MediaQuery.of(context).size.width *
+                                          .3,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },

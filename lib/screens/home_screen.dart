@@ -102,10 +102,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: SearchBar(
                         leading: Icon(Icons.search),
                         hintText: 'ابحث عن وجهتك القادمة',
-
                         backgroundColor: MaterialStateProperty.all(
                           Colors.white,
                         ),
+                        onSubmitted: (query) {
+                          if (query.isNotEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 1),
+                                backgroundColor: Color.fromARGB(
+                                  230,
+                                  23,
+                                  182,
+                                  57,
+                                ),
+                                content: Text(
+                                  'بحث عن: $query (الميزة قيد التطوير)',
+                                  textDirection: TextDirection.rtl,
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),
@@ -154,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Error: ${state.message}'),
+                                Text('مشكلة في تحميل مواقيت الصلاة '),
                                 const SizedBox(height: 16),
                                 ElevatedButton(
                                   onPressed: () {
@@ -314,7 +332,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemBuilder: (context, ind) {
                                 final partenaire = explore[ind];
                                 return InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        duration: Duration(seconds: 1),
+                                        backgroundColor: Color.fromARGB(
+                                          230,
+                                          23,
+                                          182,
+                                          57,
+                                        ),
+                                        content: Text(
+                                          'الميزة قيد التطوير',
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * .25,
@@ -373,7 +407,6 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width - 20,
       height: 65,
       margin: EdgeInsets.only(right: 10, left: 10, bottom: 10),
-
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.white,
@@ -381,59 +414,116 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.home,
-                color: Color.fromARGB(255, 23, 182, 57),
-              ),
-              Text(
-                'الرئيسية',
-                style: TextStyle(color: Color.fromARGB(255, 23, 182, 57)),
-              ),
-            ],
+          GestureDetector(
+            onTap: () {
+              // Do nothing for الرئيسية
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  CupertinoIcons.home,
+                  color: Color.fromARGB(255, 23, 182, 57),
+                ),
+                Text(
+                  'الرئيسية',
+                  style: TextStyle(color: Color.fromARGB(255, 23, 182, 57)),
+                ),
+              ],
+            ),
           ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.shopping_cart,
-                color: Color.fromARGB(255, 11, 75, 65),
-              ),
-              Text('عروض'),
-            ],
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                  content: Text(
+                    'ميزة "عروض" قيد التطوير',
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  CupertinoIcons.shopping_cart,
+                  color: Color.fromARGB(255, 11, 75, 65),
+                ),
+                Text('عروض'),
+              ],
+            ),
           ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.location,
-                color: Color.fromARGB(255, 11, 75, 65),
-              ),
-              Text('استكشف'),
-            ],
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                  content: Text(
+                    'ميزة "استكشف" قيد التطوير',
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  CupertinoIcons.location,
+                  color: Color.fromARGB(255, 11, 75, 65),
+                ),
+                Text('استكشف'),
+              ],
+            ),
           ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.mosque_rounded,
-                color: Color.fromARGB(255, 11, 75, 65),
-              ),
-              Text('عبادات'),
-            ],
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                  content: Text(
+                    'ميزة "عبادات" قيد التطوير',
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.mosque_rounded,
+                  color: Color.fromARGB(255, 11, 75, 65),
+                ),
+                Text('عبادات'),
+              ],
+            ),
           ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.gps_fixed, color: Color.fromARGB(255, 11, 75, 65)),
-              Text('الخريطة'),
-            ],
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                  content: Text(
+                    'ميزة "الخريطة" قيد التطوير',
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.gps_fixed, color: Color.fromARGB(255, 11, 75, 65)),
+                Text('الخريطة'),
+              ],
+            ),
           ),
         ],
       ),

@@ -24,23 +24,51 @@ class Suggestion extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  width: MediaQuery.of(context).size.width * 0.47,
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * .13,
-                  'assets/image.png',
+              InkWell(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                      content: Text(
+                        'قيد التطوير',
+                        textDirection: TextDirection.rtl,
+                      ),
+                    ),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    width: MediaQuery.of(context).size.width * 0.47,
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * .13,
+                    'assets/image.png',
+                  ),
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  width: MediaQuery.of(context).size.width * 0.47,
-                  "assets/Recommended.png",
+              InkWell(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                      content: Text(
+                        'قيد التطوير',
+                        textDirection: TextDirection.rtl,
+                      ),
+                    ),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    width: MediaQuery.of(context).size.width * 0.47,
+                    "assets/Recommended.png",
 
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * .13,
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * .13,
+                  ),
                 ),
               ),
             ],

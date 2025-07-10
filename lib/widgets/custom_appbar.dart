@@ -51,9 +51,23 @@ class CustomAppbar extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
-                  Icons.notifications,
-                  color: Color.fromARGB(230, 23, 182, 57),
+                child: InkWell(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(seconds: 1),
+                        backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                        content: Text(
+                          'الميزة قيد التطوير',
+                          textDirection: TextDirection.rtl,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.notifications,
+                    color: Color.fromARGB(230, 23, 182, 57),
+                  ),
                 ),
               ),
             ],

@@ -52,20 +52,33 @@ class Transport extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    borderRadius: BorderRadius.circular(8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
                   ),
-                  child: CustomTextFormField(
-                    suffixIcon: Icons.search,
-                    controller: TextEditingController(),
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.ltr,
-                    hintText: 'ابحث عن أفضل عروض النقل',
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+
+                    child: SearchBar(
+                      leading: Icon(Icons.search),
+                      hintText: 'ابحث عن أفضل عروض النقل',
+                      onSubmitted: (query) {
+                        if (query.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Color.fromARGB(230, 23, 182, 57),
+                              content: Text(
+                                'بحث عن: $query (الميزة قيد التطوير)',
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
                   ),
                 ),
 

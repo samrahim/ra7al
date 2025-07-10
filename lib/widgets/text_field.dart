@@ -31,6 +31,18 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: (newValue) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: Duration(seconds: 1),
+            backgroundColor: Color.fromARGB(230, 23, 182, 57),
+            content: Text(
+              'الميزة قيد التطوير',
+              textDirection: TextDirection.rtl,
+            ),
+          ),
+        );
+      },
       controller: controller,
       obscureText: obscureText ?? false,
       textDirection: textDirection,
